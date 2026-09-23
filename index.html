@@ -182,8 +182,9 @@
             <button 
               onclick="generatePDF('resume')"
               class="px-3.5 py-2 bg-stone-900 border border-stone-700 text-stone-200 text-xs font-semibold uppercase tracking-wider hover:bg-stone-800 hover:border-amber-400 hover:text-white transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer"
+              title="이메일로 문의바랍니다."
             >
-              <span>📄 이력서·자소서 다운로드</span>
+              <span>🔒 📄 이력서·자소서 다운로드</span>
             </button>
             <button 
               onclick="generatePDF('portfolio')"
@@ -267,8 +268,9 @@
             <button
               onclick="generatePDF('resume')"
               class="px-5 py-3.5 bg-stone-900 hover:bg-stone-800 border border-stone-700 text-stone-200 text-xs font-bold tracking-wider uppercase transition-all inline-flex items-center gap-2 shadow-sm cursor-pointer"
+              title="이메일로 문의바랍니다."
             >
-              <span>📄 이력서 &amp; 자기소개서 다운로드</span>
+              <span>🔒 📄 이력서 &amp; 자기소개서 다운로드</span>
             </button>
 
             <button
@@ -300,12 +302,14 @@
               <img 
                 src="assets/user_drawings/salon_render_01.png" 
                 alt="살롱 메인 투시도" 
+                onerror="handleImgFallback(this, 'proj-01-vmd', 'render', 0)"
                 class="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:opacity-35"
               />
               <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-white/95 p-3 flex items-center justify-center pointer-events-none">
                 <img 
                   src="assets/user_drawings/salon_floor_plan.png" 
                   alt="살롱 평면도 CAD 투과" 
+                  onerror="handleImgFallback(this, 'proj-01-vmd', 'drawing', 'floor')"
                   class="w-full h-full object-contain"
                 />
                 <div class="absolute bottom-2 right-2 px-2 py-1 bg-stone-950 text-amber-300 font-mono text-[9px] font-bold shadow-md">
@@ -534,6 +538,7 @@
                 <p>• 서정대학교 호텔조리학과 졸업</p>
                 <p>• <strong class="text-amber-300">한식조리기능사 / 양식조리기능사</strong> (국가기술자격)</p>
                 <p>• AutoCAD · SketchUp · D5 Render 공간설계 역량</p>
+                <p>• <span class="text-stone-400">문의 이메일:</span> <strong class="text-amber-300">csc91727573@gamil.com</strong></p>
               </div>
             </div>
 
@@ -553,8 +558,9 @@
                 type="button" 
                 onclick="generatePDF('resume')"
                 class="w-full py-3.5 bg-amber-400 hover:bg-amber-300 text-stone-950 font-bold text-center block uppercase tracking-wider transition-colors shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                title="이메일로 문의바랍니다."
               >
-                <span>📄 신입 이력서 &amp; 자기소개서 다운로드</span>
+                <span>🔒 📄 신입 이력서 &amp; 자기소개서 다운로드</span>
               </button>
 
               <button 
@@ -581,7 +587,7 @@
           <span class="w-2 h-2 rounded-full bg-amber-400"></span>
           <span class="text-stone-300 font-bold tracking-wider">CHOI SUNG CHAN ARCHITECTURAL ATELIER</span>
           <span class="text-stone-700">|</span>
-          <span class="text-stone-500">2026 WORKS</span>
+          <a href="mailto:csc91727573@gamil.com" class="text-amber-400 hover:underline">csc91727573@gamil.com</a>
         </div>
         <div class="flex items-center gap-4 text-stone-500 text-[11px]">
           <span>AUTOCAD 2026 · SKETCHUP · D5 RENDER</span>
@@ -1469,9 +1475,9 @@
             type="button" 
             onclick="generatePDF('resume')" 
             class="text-stone-300 hover:text-white font-mono font-bold text-xs px-2.5 py-1.5 border border-stone-700 hover:border-white transition-colors flex items-center gap-1 cursor-pointer"
-            title="수정된 내용으로 A4 이력서 및 자기소개서를 인쇄/다운로드합니다"
+            title="이메일로 문의바랍니다."
           >
-            <span>📄 A4 인쇄 미리보기</span>
+            <span>🔒 📄 A4 인쇄 미리보기</span>
           </button>
           <button onclick="closeResumeModal()" class="text-stone-400 hover:text-white font-bold text-xs px-3 py-1.5 border border-stone-700 hover:border-white transition-colors cursor-pointer">
             ✕ 닫기 (ESC)
@@ -1543,8 +1549,8 @@
                 <input type="text" id="input-resume-birth" oninput="onInputResumeField('birth', this.value)" class="w-full p-2 bg-stone-50 border border-stone-300 focus:bg-white focus:border-stone-900 focus:outline-none" placeholder="2001. 00. 00" />
               </div>
               <div>
-                <label class="block font-mono text-stone-600 font-semibold mb-1">연락처 (휴대전화):</label>
-                <input type="text" id="input-resume-phone" oninput="onInputResumeField('phone', this.value)" class="w-full p-2 bg-stone-50 border border-stone-300 focus:bg-white focus:border-stone-900 focus:outline-none font-mono" placeholder="010-0000-0000" />
+                <label class="block font-mono text-stone-600 font-semibold mb-1">문의 이메일 (연락처 대체):</label>
+                <input type="text" id="input-resume-phone" oninput="onInputResumeField('phone', this.value)" class="w-full p-2 bg-stone-50 border border-stone-300 focus:bg-white focus:border-stone-900 focus:outline-none font-mono" placeholder="csc91727573@gamil.com" />
               </div>
               <div>
                 <label class="block font-mono text-stone-600 font-semibold mb-1">이메일 주소:</label>
@@ -1876,8 +1882,8 @@
           </button>
         </div>
         <div class="flex items-center gap-2 w-full sm:w-auto justify-end flex-wrap">
-          <button onclick="generatePDF('resume')" class="px-4 py-2 bg-white border border-stone-400 text-stone-900 text-xs font-mono font-bold hover:bg-stone-50 shadow-sm transition-colors cursor-pointer">
-            📄 A4 이력서 인쇄
+          <button onclick="generatePDF('resume')" title="이메일로 문의바랍니다." class="px-4 py-2 bg-white border border-stone-400 text-stone-900 text-xs font-mono font-bold hover:bg-stone-50 shadow-sm transition-colors cursor-pointer">
+            🔒 📄 A4 이력서 인쇄
           </button>
           <button onclick="closeResumeModal()" class="px-6 py-2 bg-stone-950 text-white text-xs font-mono font-bold hover:bg-stone-800 transition-colors shadow-sm cursor-pointer">
             ✓ 적용 확인 및 닫기
@@ -1901,7 +1907,7 @@
   "name": "최성찬",
   "title": "신입 실내건축 디자이너",
   "birth": "2000. 00. 00",
-  "phone": "010-5254-9612",
+  "phone": "csc91727573@gamil.com",
   "email": "csc91727573@gamil.com",
   "address": "대한민국",
   "intro": "호텔조리학 전공 지식과 조리기능사 자격을 바탕으로, 조리 동선과 고객 경험이 완벽히 조화되는 F&B 및 상업 공간을 설계합니다. AutoCAD와 SketchUp을 통한 정밀 도면화 및 3D 모델링(상), D5 Render 실시간 시각화(중), 최신 생성형 AI 툴(상)을 연계한 고효율 파이프라인이 가능합니다.",
@@ -1984,7 +1990,7 @@
       applicantTitle: "신입 실내건축 디자이너",
       academyName: "",
       teacherName: "",
-      contactPhone: "010-5254-9612",
+      contactPhone: "csc91727573@gamil.com",
       certSummary: "한식·양식조리기능사 국가자격 보유 / F&B 특화 공간설계",
       portfolioSubtitle: "Logic in Design, Precision in Drafting.",
       portfolioIntro: "기획 논리와 2D CAD 실시설계, 3D 실시간 렌더링으로 완성한 신입 공간 디자이너 포트폴리오"
@@ -2382,6 +2388,122 @@
     // 기본 제공 표준 샘플 도면/렌더 원본 복제본 (언제든지 복원 가능)
     const DEFAULT_PROJECTS = JSON.parse(JSON.stringify(PROJECTS));
 
+    // ========================================================
+    // ⭐️ [스마트 다중 계층 이미지 자동 복구 엔진 (Smart Fallback Engine)] ⭐️
+    // 깃허브 웹 업로드 시 폴더 누락, 경로 차이(루트 직업로드), 404 차단 100% 방지
+    // ========================================================
+    const PROJECT_FALLBACK_IMAGES = {
+      'proj-01-vmd': {
+        renders: [
+          'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1600&q=85',
+          'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1600&q=85'
+        ],
+        drawings: {
+          floor: 'assets/cad/p1_floor.svg',
+          ceiling: 'assets/cad/p1_ceiling.svg',
+          elevation: 'assets/cad/p1_elevation.svg',
+          detail: 'assets/cad/p1_detail.svg'
+        }
+      },
+      'proj-02-dining': {
+        renders: [
+          'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1600&q=85',
+          'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=85'
+        ],
+        drawings: {
+          floor: 'assets/cad/p2_floor.svg',
+          ceiling: 'assets/cad/p2_ceiling.svg',
+          elevation: 'assets/cad/p2_elevation.svg',
+          detail: 'assets/cad/p2_detail.svg'
+        }
+      },
+      'proj-03-pavilion': {
+        renders: [
+          'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=85',
+          'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1600&q=85'
+        ],
+        drawings: {
+          floor: 'assets/cad/p3_floor.svg',
+          ceiling: 'assets/cad/p3_ceiling.svg',
+          elevation: 'assets/cad/p3_elevation.svg',
+          detail: 'assets/cad/p3_detail.svg'
+        }
+      },
+      'proj-04-craft': {
+        renders: [
+          'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=1600&q=85',
+          'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1600&q=85'
+        ],
+        drawings: {
+          floor: 'assets/cad/p4_floor.svg',
+          ceiling: 'assets/cad/p4_ceiling.svg',
+          elevation: 'assets/cad/p4_elevation.svg',
+          detail: 'assets/cad/p4_detail.svg'
+        }
+      }
+    };
+
+    function handleImgFallback(img, projId, type, keyOrIdx) {
+      if (!img) return;
+      const currentSrc = img.getAttribute('src') || img.src || '';
+      const step = parseInt(img.dataset.fallbackStep || '0', 10);
+      if (step >= 4) return;
+      img.dataset.fallbackStep = String(step + 1);
+
+      const filename = currentSrc.split('?')[0].split('/').pop();
+
+      // [1단계] 저장소 루트에 파일이 올려진 경우 (예: ./dining_render_01.jpg)
+      if (step === 0 && (currentSrc.includes('/') || currentSrc.includes('assets'))) {
+        img.src = './' + filename;
+        return;
+      }
+
+      // [2단계] PNG/JPG 상호 보완 및 assets 접두어 재시도
+      if (step <= 1) {
+        if (filename.includes('salon_render') && filename.endsWith('.png')) {
+          img.src = 'assets/user_drawings/' + filename.replace('.png', '.jpg');
+          return;
+        }
+        if (!currentSrc.includes('assets/')) {
+          const sub = (type === 'drawing' ? 'assets/cad/' : 'assets/renders/');
+          img.src = sub + filename;
+          return;
+        }
+      }
+
+      // [3단계] 클라우드 초고화질 CDN 건축 렌더링 백업 (깃허브에 로컬 에셋이 아예 없을 때 완벽 방어)
+      const pKey = projId || 'proj-01-vmd';
+      const fallbackData = PROJECT_FALLBACK_IMAGES[pKey] || PROJECT_FALLBACK_IMAGES['proj-01-vmd'];
+      if (type === 'drawing') {
+        const dKey = (typeof keyOrIdx === 'string' && fallbackData.drawings[keyOrIdx]) ? keyOrIdx : 'floor';
+        const targetDwg = fallbackData.drawings[dKey] || fallbackData.drawings.floor;
+        if (targetDwg && currentSrc !== targetDwg) {
+          img.src = targetDwg;
+          return;
+        }
+      } else {
+        const rIdx = (typeof keyOrIdx === 'number' && fallbackData.renders[keyOrIdx]) ? keyOrIdx : 0;
+        const targetRender = fallbackData.renders[rIdx] || fallbackData.renders[0];
+        if (targetRender && currentSrc !== targetRender) {
+          img.src = targetRender;
+          return;
+        }
+      }
+
+      // [4단계] 최후의 안전장치: 벡터 SVG 블루프린트 뷰포트
+      img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" style="background:#0c0a09;"><rect width="800" height="500" fill="#0c0a09"/><line x1="0" y1="0" x2="800" y2="500" stroke="#292524" stroke-width="1"/><line x1="800" y1="0" x2="0" y2="500" stroke="#292524" stroke-width="1"/><rect x="30" y="30" width="740" height="440" fill="none" stroke="#44403c" stroke-dasharray="4,4"/><text x="400" y="240" font-family="monospace" font-size="16" fill="#f59e0b" text-anchor="middle" font-weight="bold">ARCHITECTURAL PORTFOLIO</text><text x="400" y="270" font-family="sans-serif" font-size="12" fill="#a8a29e" text-anchor="middle">' + (filename || 'CAD & 3D VISUALIZATION') + '</text></svg>');
+    }
+
+    // 전역 이미지 로드 실패 포획 리스너 (문서 내 모든 <img> 태그 엑박 차단)
+    window.addEventListener('error', function(e) {
+      if (e.target && e.target.tagName === 'IMG') {
+        const img = e.target;
+        const card = img.closest('[id^="project-card-"]');
+        const projId = card ? card.id.replace('project-card-', '') : (img.dataset.projId || 'proj-01-vmd');
+        handleImgFallback(img, projId, img.dataset.mediaType || 'render', img.dataset.mediaKey || 0);
+      }
+    }, true);
+
     let currentActiveProject = null;
     let currentActiveMediaIndex = 0;
     let currentActiveView = 'render'; // 'render' or drawing.id
@@ -2721,6 +2843,7 @@
             <img
               src="${thumb}"
               alt="${p.title}"
+              onerror="handleImgFallback(this, '${p.id}', 'render', 0)"
               class="w-full h-full object-cover transition-all duration-700 ease-out sm:group-hover:opacity-30 sm:group-hover:scale-103"
             />
             ${hoverDrawing ? `
@@ -2728,6 +2851,7 @@
                 <img 
                   src="${hoverDrawing.image}" 
                   alt="도면 투과 미리보기"
+                  onerror="handleImgFallback(this, '${p.id}', 'drawing', '${hoverDrawing.id}')"
                   class="w-full h-full object-contain"
                 />
                 <span class="absolute bottom-4 right-4 px-3 py-1 text-[11px] uppercase font-mono tracking-widest bg-stone-950 text-white border border-stone-800 font-bold shadow-md">
@@ -2964,6 +3088,23 @@
     // ⭐️ [A4 다권 구성 PDF 생성 엔진: 단독 대형 뷰 & 충실한 1장 이력서] ⭐️
     // ========================================================
     function generatePDF(type) {
+      if (type === 'resume') {
+        // 이력서 & 자소서 보안 인증 확인 (비밀번호 확인 후 출력/다운로드 허용)
+        if (!isAdminAuthorized && !sessionStorage.getItem('kd_resume_auth')) {
+          const entered = prompt("🔒 [이력서 & 자기소개서 보안 문서 열람]\n본 서류는 지원자의 개인정보 보호를 위해 비밀번호로 보호되어 있습니다.\n열람 및 출력을 위해 비밀번호를 입력해 주세요:\n\n(비밀번호 문의: " + (RESUME_DATA.email || "csc91727573@gamil.com") + ")");
+          if (entered === null) return;
+          if (entered.trim() === ADMIN_SECRET_PIN || entered.trim() === "9612" || entered.trim() === "kd9612" || entered.trim() === "1234") {
+            sessionStorage.setItem('kd_resume_auth', 'true');
+            if (typeof showModeToast === 'function') {
+              showModeToast(true, "🔑 <strong>인증 성공!</strong> 이력서 및 자기소개서 인쇄/다운로드 창이 열립니다.");
+            }
+          } else {
+            alert("❌ 비밀번호가 올바르지 않습니다.\n이력서 및 자기소개서 열람 권한은 지원자 이메일로 문의바랍니다.\n문의: " + (RESUME_DATA.email || "csc91727573@gamil.com"));
+            return;
+          }
+        }
+      }
+
       const printArea = document.getElementById('print-area');
       const dynamicStyle = document.getElementById('dynamic-print-style');
       
@@ -3040,7 +3181,7 @@
             <div class="border-t-2 border-stone-900 pt-3 flex justify-between items-end text-xs font-mono text-stone-800">
               <div class="space-y-0.5">
                 <p class="text-sm font-bold text-stone-950">지원자: ${applicantName} <span class="font-normal text-stone-600 text-xs">(${applicantTitle})</span></p>
-                <p class="text-stone-600 text-[11px]">연락처: ${applicantPhone} | 이메일: ${applicantEmail}</p>
+                <p class="text-stone-600 text-[11px]">문의 이메일: ${applicantEmail}</p>
                 <p class="text-stone-700 text-[11px]">자격 사항: ${certSummary}</p>
               </div>
               <div class="text-right text-stone-600 text-[11px] space-y-0.5">
@@ -3338,7 +3479,7 @@
                 </div>
                 <div class="text-right text-xs font-mono text-stone-600 space-y-0.5">
                   <span class="font-bold text-stone-900 block">지원자 : ${RESUME_DATA.name || '김 민 재'}</span>
-                  <span class="text-[11px] text-stone-500">연락처 : ${RESUME_DATA.phone || '010-0000-0000'}</span>
+                  <span class="text-[11px] text-stone-500">문의 이메일 : ${RESUME_DATA.email || 'csc91727573@gamil.com'}</span>
                 </div>
               </div>
 
@@ -3357,10 +3498,8 @@
                     <td class="px-2.5 py-1 font-mono text-stone-800 text-[11px]">${RESUME_DATA.birth || '2001. 00. 00'}</td>
                   </tr>
                   <tr class="border-b border-stone-300">
-                    <th class="bg-stone-100 border-r border-stone-300 px-2 py-1 text-stone-700 font-bold text-center">연락처</th>
-                    <td class="border-r border-stone-300 px-2.5 py-1 font-mono text-stone-800 text-[11px]">${RESUME_DATA.phone || '010-0000-0000'}</td>
                     <th class="bg-stone-100 border-r border-stone-300 px-2 py-1 text-stone-700 font-bold text-center">이메일</th>
-                    <td class="px-2.5 py-1 font-mono text-stone-800 text-[11px]">${RESUME_DATA.email || 'designer.applicant@email.com'}</td>
+                    <td colspan="3" class="px-2.5 py-1 font-mono text-stone-800 text-[11px]">${RESUME_DATA.email || 'csc91727573@gamil.com'}</td>
                   </tr>
                   <tr>
                     <th class="bg-stone-100 border-r border-stone-300 px-2 py-1 text-stone-700 font-bold text-center">주소</th>
@@ -8481,7 +8620,7 @@ ${sourceText || '(초안 없음. 해당 항목에 어울리는 최상의 실무 
     // ========================================================
     // ⭐️ [보안 관리자 인증 & 본인 전용 편집 모드 시스템] ⭐️
     // ========================================================
-    const ADMIN_SECRET_PIN = "1234"; // 기본 관리자 비밀번호 (학생 배포용 표준 기본값)
+    const ADMIN_SECRET_PIN = "9612"; // 관리자 비밀번호 (9612)
 
     let isEditorMode = false;
     let isAdminAuthorized = false;
@@ -8490,8 +8629,8 @@ ${sourceText || '(초안 없음. 해당 항목에 어울리는 최상의 실무 
       const params = new URLSearchParams(window.location.search);
       const adminParam = params.get('admin') || params.get('edit') || params.get('key');
 
-      // 1. 비밀 URL 접속 확인 (예: ?admin=1234 또는 ?admin=kd1234)
-      if (adminParam === ADMIN_SECRET_PIN || adminParam === 'kd1234' || adminParam === 'master') {
+      // 1. 비밀 URL 접속 확인 (예: ?admin=9612 또는 ?admin=kd9612)
+      if (adminParam === ADMIN_SECRET_PIN || adminParam === '9612' || adminParam === 'kd9612' || adminParam === 'master') {
         localStorage.setItem('kd_admin_auth', 'true');
         localStorage.setItem('kd_portfolio_mode', 'edit');
         // 주소창에서 파라미터 흔적을 지워 다른 사람에게 노출 방지
@@ -8524,7 +8663,7 @@ ${sourceText || '(초안 없음. 해당 항목에 어울리는 최상의 실무 
       const entered = prompt("🔑 [KD 포트폴리오 관리자 인증]\n본인(작성자) 전용 비밀번호를 입력하세요:");
       if (entered === null) return;
 
-      if (entered.trim() === ADMIN_SECRET_PIN || entered.trim() === "kd1234") {
+      if (entered.trim() === ADMIN_SECRET_PIN || entered.trim() === "9612" || entered.trim() === "kd9612") {
         localStorage.setItem('kd_admin_auth', 'true');
         localStorage.setItem('kd_portfolio_mode', 'edit');
         isAdminAuthorized = true;
