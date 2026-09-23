@@ -27,6 +27,9 @@
     }
   </script>
 
+  <!-- ⭐️ 클라이언트 사이드 고해상도 PDF 다운로드 엔진 (모바일 & 데스크톱 100% 호환) ⭐️ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
   <style>
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #F5F5F4; }
@@ -101,7 +104,7 @@
       body > *:not(#print-area) {
         display: none !important;
       }
-      #web-layout, header, footer, nav, aside, #modal-container, #upload-modal, #project-order-modal, #resume-modal { 
+      #web-layout, header, footer, nav, aside, #modal-container, #upload-modal, #project-order-modal, #resume-modal, #resume-password-modal, #doc-viewer-modal { 
         display: none !important; 
       }
       #print-area {
@@ -110,6 +113,47 @@
         margin: 0 !important;
         padding: 0 !important;
         background: white !important;
+      }
+    }
+
+    /* ⭐️ 모바일 & 데스크톱 A4 문서 뷰어 전용 스타일 ⭐️ */
+    #doc-viewer-modal {
+      transition: opacity 0.2s ease-in-out;
+    }
+    #doc-viewer-pages .print-card-page,
+    #doc-viewer-pages .resume-card-page {
+      background: #FFFFFF !important;
+      color: #1C1917 !important;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2) !important;
+      border: 1px solid #D6D3D1 !important;
+      border-radius: 3px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      overflow: hidden !important;
+      position: relative !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    /* 가로형 포트폴리오 북 뷰어 */
+    #doc-viewer-pages.landscape-mode .print-card-page {
+      max-width: 1050px;
+      min-height: 580px;
+      padding: 32px 36px !important;
+    }
+    /* 세로형 이력서 & 자소서 뷰어 */
+    #doc-viewer-pages.portrait-mode .resume-card-page {
+      max-width: 820px;
+      min-height: 980px;
+      padding: 36px 40px !important;
+    }
+    @media (max-width: 768px) {
+      #doc-viewer-pages.landscape-mode .print-card-page {
+        min-height: auto !important;
+        padding: 16px 12px !important;
+      }
+      #doc-viewer-pages.portrait-mode .resume-card-page {
+        min-height: auto !important;
+        padding: 16px 12px !important;
       }
     }
   </style>
@@ -155,8 +199,8 @@
         </div>
 
         <nav class="hidden md:flex items-center space-x-7 text-xs font-semibold uppercase tracking-wider text-stone-300">
+          <a href="#designer-profile" class="hover:text-amber-300 transition-colors">지원자 사양서 (Profile)</a>
           <a href="#portfolio" id="web-nav-portfolio" class="hover:text-amber-300 transition-colors">핵심 프로젝트 (Works)</a>
-          <a href="#designer-profile" class="hover:text-amber-300 transition-colors">지원자 프로필 (Profile)</a>
           <div class="flex items-center gap-2">
             <button 
               onclick="openResumeModal('landing')"
@@ -346,6 +390,95 @@
       </div>
     </section>
 
+    <!-- 신입 디자이너 프로필 & 서류 다운로드 섹션 (엔지니어링 사양서 스펙시트) -->
+    <section id="designer-profile" class="py-20 bg-[#090a0c] border-b border-stone-800 text-white">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        <div class="bg-stone-900/90 border border-stone-800 p-8 sm:p-12 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div class="lg:col-span-7 space-y-5">
+            <div class="inline-flex items-center gap-2 text-xs font-mono uppercase text-amber-400">
+              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+              Candidate Spec Sheet · 신입 지원자 사양서
+            </div>
+            <h2 id="web-profile-name" class="text-3xl sm:text-4xl font-bold tracking-tight text-white font-display break-keep">
+              최성찬 (Choi sung chan) <span id="web-profile-title" class="text-base font-normal text-stone-400 font-sans">| 신입 실내건축 디자이너</span>
+            </h2>
+            <p id="web-profile-intro" class="text-stone-300 text-sm sm:text-base font-light leading-relaxed break-keep">
+              “호텔조리학 전공 지식과 조리기능사 자격을 바탕으로, 조리 동선과 고객 경험이 완벽히 조화되는 F&amp;B 및 상업 공간을 설계합니다. 
+              AutoCAD와 SketchUp을 통한 정밀 도면화 및 3D 모델링(상), D5 Render 실시간 시각화(중), 최신 생성형 AI 툴(상)을 연계한 고효율 파이프라인이 가능합니다.”
+            </p>
+
+            <div class="space-y-3 pt-2">
+              <span class="text-xs font-mono font-semibold text-stone-300 uppercase block">Software Proficiency:</span>
+              <div id="web-profile-software" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+                <div class="bg-stone-950 p-2.5 border border-stone-800">
+                  <div class="flex justify-between font-mono mb-1 text-[11px] sm:text-xs text-stone-300"><span>AutoCAD (상)</span><span class="font-bold text-amber-400">95%</span></div>
+                  <div class="w-full bg-stone-800 h-1.5"><div class="bg-amber-400 h-1.5" style="width: 95%"></div></div>
+                </div>
+                <div class="bg-stone-950 p-2.5 border border-stone-800">
+                  <div class="flex justify-between font-mono mb-1 text-[11px] sm:text-xs text-stone-300"><span>SketchUp (상)</span><span class="font-bold text-amber-400">95%</span></div>
+                  <div class="w-full bg-stone-800 h-1.5"><div class="bg-amber-400 h-1.5" style="width: 95%"></div></div>
+                </div>
+                <div class="bg-stone-950 p-2.5 border border-stone-800">
+                  <div class="flex justify-between font-mono mb-1 text-[11px] sm:text-xs text-stone-300"><span>D5 Render (중)</span><span class="font-bold text-amber-400">75%</span></div>
+                  <div class="w-full bg-stone-800 h-1.5"><div class="bg-amber-400 h-1.5" style="width: 75%"></div></div>
+                </div>
+                <div class="bg-stone-950 p-2.5 border border-stone-800">
+                  <div class="flex justify-between font-mono mb-1 text-[11px] sm:text-xs text-stone-300"><span>AI Tools (상)</span><span class="font-bold text-amber-400">95%</span></div>
+                  <div class="w-full bg-stone-800 h-1.5"><div class="bg-amber-400 h-1.5" style="width: 95%"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 bg-stone-950 p-6 border border-stone-800 shadow-xl space-y-5 text-xs text-stone-300">
+            <div class="space-y-2 border-b border-stone-800 pb-4">
+              <span class="font-mono text-amber-400 uppercase font-semibold block">Education &amp; Credentials</span>
+              <div id="web-profile-education" class="space-y-1.5 text-stone-300 font-mono text-[11px]">
+                <p>• 서정대학교 호텔조리학과 졸업</p>
+                <p>• <strong class="text-amber-300">한식조리기능사 / 양식조리기능사</strong> (국가기술자격)</p>
+                <p>• AutoCAD · SketchUp · D5 Render 공간설계 역량</p>
+                <p>• <span class="text-stone-400">문의 이메일:</span> <strong class="text-amber-300">csc91727573@gamil.com</strong></p>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <span class="editor-only font-mono text-stone-400 uppercase font-semibold block">지원 서류 직접 편집 &amp; 원클릭 A4 인쇄</span>
+
+              <button 
+                type="button" 
+                onclick="openResumeModal('resume')"
+                class="editor-only w-full py-3.5 bg-stone-900 hover:bg-stone-800 text-amber-300 font-bold text-center block uppercase tracking-wider transition-colors shadow-md flex items-center justify-center gap-2 border border-stone-700 cursor-pointer"
+                title="이력서 인적사항, 학력, 자격증, 소프트웨어 역량 및 자기소개서 4개 항목을 직접 수정합니다"
+              >
+                <span>✏️ 이력서 &amp; 자기소개서 내용 직접 수정하기</span>
+              </button>
+              
+              <button 
+                type="button" 
+                onclick="generatePDF('resume')"
+                class="w-full py-3.5 bg-amber-400 hover:bg-amber-300 text-stone-950 font-bold text-center block uppercase tracking-wider transition-colors shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                title="이메일로 문의바랍니다."
+              >
+                <span>🔒 📄 신입 이력서 &amp; 자기소개서 다운로드</span>
+              </button>
+
+              <button 
+                type="button" 
+                onclick="generatePDF('portfolio')"
+                class="w-full py-3 bg-stone-900 border border-stone-700 text-stone-200 font-semibold text-center block uppercase tracking-wider hover:bg-stone-800 hover:border-amber-400 hover:text-white transition-colors flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+              >
+                <span>📥 포트폴리오 북 다운로드</span>
+              </button>
+              
+              <span class="text-[11px] text-stone-400 block text-center">
+                💡 수정하신 모든 내용이 실시간으로 A4 인쇄물과 웹 화면에 100% 반영됩니다.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- 프로젝트 대형 쇼케이스 (다크 블루프린트 워크스테이션) -->
     <section id="portfolio" class="py-20 bg-[#0d0e11] border-t border-stone-800 text-stone-100">
       <div class="max-w-7xl mx-auto px-6 sm:px-8 space-y-16">
@@ -491,94 +624,6 @@
       </div>
     </section>
 
-    <!-- 신입 디자이너 프로필 & 서류 다운로드 섹션 (엔지니어링 사양서 스펙시트) -->
-    <section id="designer-profile" class="py-20 bg-[#090a0c] border-t border-b border-stone-800 text-white">
-      <div class="max-w-7xl mx-auto px-6 sm:px-8">
-        <div class="bg-stone-900/90 border border-stone-800 p-8 sm:p-12 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          <div class="lg:col-span-7 space-y-5">
-            <div class="inline-flex items-center gap-2 text-xs font-mono uppercase text-amber-400">
-              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-              Candidate Spec Sheet · 신입 지원자 사양서
-            </div>
-            <h2 id="web-profile-name" class="text-3xl sm:text-4xl font-bold tracking-tight text-white font-display break-keep">
-              최성찬 (Choi sung chan) <span id="web-profile-title" class="text-base font-normal text-stone-400 font-sans">| 신입 실내건축 디자이너</span>
-            </h2>
-            <p id="web-profile-intro" class="text-stone-300 text-sm sm:text-base font-light leading-relaxed break-keep">
-              “호텔조리학 전공 지식과 조리기능사 자격을 바탕으로, 조리 동선과 고객 경험이 완벽히 조화되는 F&amp;B 및 상업 공간을 설계합니다. 
-              AutoCAD와 SketchUp을 통한 정밀 도면화 및 3D 모델링(상), D5 Render 실시간 시각화(중), 최신 생성형 AI 툴(상)을 연계한 고효율 파이프라인이 가능합니다.”
-            </p>
-
-            <div class="space-y-3 pt-2">
-              <span class="text-xs font-mono font-semibold text-stone-300 uppercase block">Software Proficiency:</span>
-              <div id="web-profile-software" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
-                <div class="bg-stone-950 p-2.5 border border-stone-800">
-                  <div class="flex justify-between font-mono mb-1 text-[11px] sm:text-xs text-stone-300"><span>AutoCAD (상)</span><span class="font-bold text-amber-400">95%</span></div>
-                  <div class="w-full bg-stone-800 h-1.5"><div class="bg-amber-400 h-1.5" style="width: 95%"></div></div>
-                </div>
-                <div class="bg-stone-950 p-2.5 border border-stone-800">
-                  <div class="flex justify-between font-mono mb-1 text-[11px] sm:text-xs text-stone-300"><span>SketchUp (상)</span><span class="font-bold text-amber-400">95%</span></div>
-                  <div class="w-full bg-stone-800 h-1.5"><div class="bg-amber-400 h-1.5" style="width: 95%"></div></div>
-                </div>
-                <div class="bg-stone-950 p-2.5 border border-stone-800">
-                  <div class="flex justify-between font-mono mb-1 text-[11px] sm:text-xs text-stone-300"><span>D5 Render (중)</span><span class="font-bold text-amber-400">75%</span></div>
-                  <div class="w-full bg-stone-800 h-1.5"><div class="bg-amber-400 h-1.5" style="width: 75%"></div></div>
-                </div>
-                <div class="bg-stone-950 p-2.5 border border-stone-800">
-                  <div class="flex justify-between font-mono mb-1 text-[11px] sm:text-xs text-stone-300"><span>AI Tools (상)</span><span class="font-bold text-amber-400">95%</span></div>
-                  <div class="w-full bg-stone-800 h-1.5"><div class="bg-amber-400 h-1.5" style="width: 95%"></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="lg:col-span-5 bg-stone-950 p-6 border border-stone-800 shadow-xl space-y-5 text-xs text-stone-300">
-            <div class="space-y-2 border-b border-stone-800 pb-4">
-              <span class="font-mono text-amber-400 uppercase font-semibold block">Education &amp; Credentials</span>
-              <div id="web-profile-education" class="space-y-1.5 text-stone-300 font-mono text-[11px]">
-                <p>• 서정대학교 호텔조리학과 졸업</p>
-                <p>• <strong class="text-amber-300">한식조리기능사 / 양식조리기능사</strong> (국가기술자격)</p>
-                <p>• AutoCAD · SketchUp · D5 Render 공간설계 역량</p>
-                <p>• <span class="text-stone-400">문의 이메일:</span> <strong class="text-amber-300">csc91727573@gamil.com</strong></p>
-              </div>
-            </div>
-
-            <div class="space-y-3">
-              <span class="editor-only font-mono text-stone-400 uppercase font-semibold block">지원 서류 직접 편집 &amp; 원클릭 A4 인쇄</span>
-
-              <button 
-                type="button" 
-                onclick="openResumeModal('resume')"
-                class="editor-only w-full py-3.5 bg-stone-900 hover:bg-stone-800 text-amber-300 font-bold text-center block uppercase tracking-wider transition-colors shadow-md flex items-center justify-center gap-2 border border-stone-700 cursor-pointer"
-                title="이력서 인적사항, 학력, 자격증, 소프트웨어 역량 및 자기소개서 4개 항목을 직접 수정합니다"
-              >
-                <span>✏️ 이력서 &amp; 자기소개서 내용 직접 수정하기</span>
-              </button>
-              
-              <button 
-                type="button" 
-                onclick="generatePDF('resume')"
-                class="w-full py-3.5 bg-amber-400 hover:bg-amber-300 text-stone-950 font-bold text-center block uppercase tracking-wider transition-colors shadow-md flex items-center justify-center gap-2 cursor-pointer"
-                title="이메일로 문의바랍니다."
-              >
-                <span>🔒 📄 신입 이력서 &amp; 자기소개서 다운로드</span>
-              </button>
-
-              <button 
-                type="button" 
-                onclick="generatePDF('portfolio')"
-                class="w-full py-3 bg-stone-900 border border-stone-700 text-stone-200 font-semibold text-center block uppercase tracking-wider hover:bg-stone-800 hover:border-amber-400 hover:text-white transition-colors flex items-center justify-center gap-2 shadow-sm cursor-pointer"
-              >
-                <span>📥 포트폴리오 북 다운로드</span>
-              </button>
-              
-              <span class="text-[11px] text-stone-400 block text-center">
-                💡 수정하신 모든 내용이 실시간으로 A4 인쇄물과 웹 화면에 100% 반영됩니다.
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- Dark Blueprint Atelier Footer -->
     <footer class="py-10 bg-[#07080a] border-t border-stone-800 text-stone-400 font-mono text-xs">
@@ -1898,6 +1943,122 @@
     <span id="upload-toast-message">✅ 도면이 성공적으로 적용되었습니다.</span>
   </div>
 
+  <!-- 🔒 이력서 & 자기소개서 열람 비밀번호 인증 모달 (모바일/PC 완벽 호환) -->
+  <div id="resume-password-modal" class="fixed inset-0 z-50 bg-stone-950/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white border border-stone-300 shadow-2xl max-w-md w-full p-6 text-stone-900 relative rounded-sm">
+      <div class="flex items-start justify-between border-b border-stone-200 pb-3 mb-4">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🔒</span>
+          <div>
+            <h3 class="font-display font-bold text-base text-stone-950">보안 문서 열람 인증</h3>
+            <p class="text-[11px] font-mono text-stone-500">RESUME &amp; COVER LETTER ACCESS</p>
+          </div>
+        </div>
+        <button onclick="closeResumePasswordModal()" class="text-stone-400 hover:text-stone-700 text-lg font-mono leading-none cursor-pointer" title="닫기">&times;</button>
+      </div>
+
+      <p class="text-xs text-stone-600 mb-4 leading-relaxed font-sans">
+        지원자의 개인정보 및 서류 보호를 위해 비밀번호로 보호되어 있습니다.<br/>
+        열람 및 출력을 위해 <strong>비밀번호(PIN)</strong>를 입력해 주세요.
+      </p>
+
+      <form onsubmit="event.preventDefault(); submitResumePassword();" class="space-y-4">
+        <div>
+          <label for="resume-modal-pin-input" class="block text-xs font-mono font-bold text-stone-700 mb-1">열람 비밀번호 (PIN)</label>
+          <input 
+            type="password" 
+            id="resume-modal-pin-input" 
+            maxlength="20" 
+            placeholder="비밀번호 4자리 입력" 
+            autocomplete="off"
+            class="w-full px-3 py-2.5 bg-stone-50 border border-stone-300 text-sm font-mono text-stone-900 focus:outline-none focus:border-stone-900 focus:bg-white transition-colors"
+          />
+          <div id="resume-modal-error-msg" class="text-xs text-red-600 mt-1.5 hidden font-sans font-medium">
+            ❌ 비밀번호가 올바르지 않습니다. (문의: csc91727573@gamil.com)
+          </div>
+        </div>
+
+        <div class="bg-stone-50 border border-stone-200 p-2.5 text-[11px] text-stone-600 flex items-center justify-between">
+          <span>비밀번호 문의:</span>
+          <a href="mailto:csc91727573@gamil.com" class="font-mono font-bold text-stone-900 hover:underline">
+            csc91727573@gamil.com
+          </a>
+        </div>
+
+        <div class="flex items-center gap-2 pt-2">
+          <button 
+            type="button" 
+            onclick="closeResumePasswordModal()" 
+            class="flex-1 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-mono font-bold transition-colors cursor-pointer">
+            취소
+          </button>
+          <button 
+            type="submit" 
+            class="flex-1 py-2.5 bg-stone-900 hover:bg-stone-800 text-white text-xs font-mono font-bold transition-colors shadow-sm cursor-pointer">
+            확인 (문서 열람)
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 📄 통합 A4 문서 뷰어 & PDF 직접 다운로드 센터 (모바일/PC 완벽 호환) -->
+  <div id="doc-viewer-modal" class="fixed inset-0 z-50 bg-stone-950/90 backdrop-blur-md hidden flex-col overflow-hidden">
+    <!-- 상단 컨트롤 툴바 (Sticky Header) -->
+    <header class="bg-stone-900 border-b border-stone-800 text-white px-3 sm:px-6 py-2.5 flex items-center justify-between z-20 shrink-0 shadow-lg">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <span id="doc-viewer-icon" class="text-lg">📘</span>
+        <div class="min-w-0">
+          <h2 id="doc-viewer-title" class="text-xs sm:text-sm font-bold font-display truncate text-stone-100">A4 포트폴리오 북</h2>
+          <p id="doc-viewer-subtitle" class="text-[10px] font-mono text-stone-400 truncate">총 0페이지 · 고해상도 인쇄 규격</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <!-- 📥 PDF 파일 직접 다운로드 버튼 (모바일 & PC 공통 필수) -->
+        <button 
+          id="doc-download-pdf-btn" 
+          onclick="downloadCurrentDocPDF()" 
+          class="px-3 sm:px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-mono font-bold rounded flex items-center gap-1.5 shadow transition-all cursor-pointer">
+          <i class="fa-solid fa-file-arrow-down text-xs"></i>
+          <span id="doc-download-pdf-text">📥 PDF 파일 저장</span>
+        </button>
+        <!-- 🖨️ 시스템 인쇄 버튼 -->
+        <button 
+          onclick="triggerSystemPrint()" 
+          class="hidden sm:flex px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-mono font-bold rounded items-center gap-1.5 border border-stone-700 transition-all cursor-pointer"
+          title="인쇄 다이얼로그 호출">
+          <i class="fa-solid fa-print text-xs"></i>
+          <span>🖨️ 인쇄</span>
+        </button>
+        <!-- ✕ 닫기 버튼 -->
+        <button 
+          onclick="closeDocViewerModal()" 
+          class="px-2.5 sm:px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white text-xs font-mono rounded border border-stone-700 transition-all cursor-pointer"
+          title="뷰어 닫기">
+          ✕ 닫기
+        </button>
+      </div>
+    </header>
+
+    <!-- 모바일 안내 배너 -->
+    <div class="bg-stone-800/90 border-b border-stone-700 text-stone-300 px-3 sm:px-6 py-2 text-[11px] sm:text-xs flex items-center justify-between shrink-0">
+      <div class="flex items-center gap-2 truncate">
+        <span class="text-amber-400 shrink-0">💡</span>
+        <span class="truncate">모바일 안내: 상단의 <strong>[📥 PDF 파일 저장]</strong> 버튼을 누르시면 PDF로 즉시 저장되며, 아래에서 모든 페이지를 스크롤하여 바로 열람하실 수 있습니다.</span>
+      </div>
+      <div class="text-[10px] font-mono text-stone-400 hidden md:block shrink-0">
+        문의: csc91727573@gamil.com
+      </div>
+    </div>
+
+    <!-- 문서 스크롤 뷰어 본문 -->
+    <div id="doc-viewer-scroll-area" class="flex-1 overflow-y-auto overflow-x-hidden p-2 sm:p-6 bg-stone-950/70">
+      <div id="doc-viewer-pages" class="max-w-5xl mx-auto space-y-4 sm:space-y-6">
+        <!-- 렌더링된 페이지 카드들이 여기에 삽입됩니다 -->
+      </div>
+    </div>
+  </div>
+
   <!-- JavaScript Logic -->
   <script>
     // ========================================================
@@ -3089,19 +3250,10 @@
     // ========================================================
     function generatePDF(type) {
       if (type === 'resume') {
-        // 이력서 & 자소서 보안 인증 확인 (비밀번호 확인 후 출력/다운로드 허용)
+        // 이력서 & 자소서 보안 인증 확인 (모바일 친화적 인라인 PIN 모달 호출)
         if (!isAdminAuthorized && !sessionStorage.getItem('kd_resume_auth')) {
-          const entered = prompt("🔒 [이력서 & 자기소개서 보안 문서 열람]\n본 서류는 지원자의 개인정보 보호를 위해 비밀번호로 보호되어 있습니다.\n열람 및 출력을 위해 비밀번호를 입력해 주세요:\n\n(비밀번호 문의: " + (RESUME_DATA.email || "csc91727573@gamil.com") + ")");
-          if (entered === null) return;
-          if (entered.trim() === ADMIN_SECRET_PIN || entered.trim() === "9612" || entered.trim() === "kd9612" || entered.trim() === "1234") {
-            sessionStorage.setItem('kd_resume_auth', 'true');
-            if (typeof showModeToast === 'function') {
-              showModeToast(true, "🔑 <strong>인증 성공!</strong> 이력서 및 자기소개서 인쇄/다운로드 창이 열립니다.");
-            }
-          } else {
-            alert("❌ 비밀번호가 올바르지 않습니다.\n이력서 및 자기소개서 열람 권한은 지원자 이메일로 문의바랍니다.\n문의: " + (RESUME_DATA.email || "csc91727573@gamil.com"));
-            return;
-          }
+          openResumePasswordModal();
+          return;
         }
       }
 
@@ -3114,7 +3266,7 @@
             @page { size: A4 landscape; margin: 8mm; }
             html, body { margin: 0 !important; padding: 0 !important; background: white !important; }
             body > *:not(#print-area) { display: none !important; }
-            #web-layout, header, footer, nav, aside, #modal-container, #upload-modal, #project-order-modal, #resume-modal { display: none !important; }
+            #web-layout, header, footer, nav, aside, #modal-container, #upload-modal, #project-order-modal, #resume-modal, #resume-password-modal, #doc-viewer-modal { display: none !important; }
             #print-area { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
             .print-card-page {
               width: 100% !important;
@@ -3443,14 +3595,29 @@
           });
         });
 
-        printArea.innerHTML = htmlPages.join('');
+        const portfolioHtml = htmlPages.join('');
+        printArea.innerHTML = portfolioHtml;
+
+        // 통합 A4 문서 뷰어에 동기화
+        currentDocViewerType = 'portfolio';
+        const docViewerPages = document.getElementById('doc-viewer-pages');
+        if (docViewerPages) {
+          docViewerPages.className = 'max-w-5xl mx-auto space-y-4 sm:space-y-6 landscape-mode';
+          docViewerPages.innerHTML = portfolioHtml;
+        }
+        const docViewerTitle = document.getElementById('doc-viewer-title');
+        const docViewerSubtitle = document.getElementById('doc-viewer-subtitle');
+        const docViewerIcon = document.getElementById('doc-viewer-icon');
+        if (docViewerTitle) docViewerTitle.textContent = `${applicantName} 실내건축 포트폴리오 북 (A4)`;
+        if (docViewerSubtitle) docViewerSubtitle.textContent = `총 ${totalPages}페이지 · 가로형 A4 규격 (컬렉션 2026)`;
+        if (docViewerIcon) docViewerIcon.textContent = '📘';
       } else {
         dynamicStyle.innerHTML = `
           @media print {
             @page { size: A4 portrait; margin: 8mm 10mm; }
             html, body { margin: 0 !important; padding: 0 !important; background: white !important; }
             body > *:not(#print-area) { display: none !important; }
-            #web-layout, header, footer, nav, aside, #modal-container, #upload-modal, #project-order-modal, #resume-modal { display: none !important; }
+            #web-layout, header, footer, nav, aside, #modal-container, #upload-modal, #project-order-modal, #resume-modal, #resume-password-modal, #doc-viewer-modal { display: none !important; }
             #print-area { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
             .resume-card-page {
               width: 100% !important;
@@ -3466,7 +3633,7 @@
           }
         `;
 
-        printArea.innerHTML = `
+        const resumeHtml = `
           <!-- PAGE 1: 입사지원서 (1장에 꽉 찬 전문가 표준 양식) -->
           <div class="resume-card-page" style="page-break-after: always; break-after: page;">
             <div class="space-y-2">
@@ -3674,11 +3841,228 @@
             }).join('');
           })()}
         `;
+
+        printArea.innerHTML = resumeHtml;
+
+        // 통합 A4 문서 뷰어에 동기화
+        currentDocViewerType = 'resume';
+        const docViewerPages = document.getElementById('doc-viewer-pages');
+        if (docViewerPages) {
+          docViewerPages.className = 'max-w-5xl mx-auto space-y-4 sm:space-y-6 portrait-mode';
+          docViewerPages.innerHTML = resumeHtml;
+        }
+        const docViewerTitle = document.getElementById('doc-viewer-title');
+        const docViewerSubtitle = document.getElementById('doc-viewer-subtitle');
+        const docViewerIcon = document.getElementById('doc-viewer-icon');
+        if (docViewerTitle) docViewerTitle.textContent = `${RESUME_DATA.name || '최성찬'} 입사지원서 및 자기소개서 (A4)`;
+        if (docViewerSubtitle) docViewerSubtitle.textContent = `총 ${totalPrintPages}페이지 · 세로형 A4 규격`;
+        if (docViewerIcon) docViewerIcon.textContent = '📄';
       }
 
-      setTimeout(() => {
-        window.print();
-      }, 250);
+      // 통합 A4 문서 뷰어 모달 열기
+      openDocViewerModal();
+
+      // 데스크톱 환경에서는 브라우저 인쇄 다이얼로그도 보조 자동 실행 (모바일 환경에서는 뷰어 및 PDF 직접 다운로드 우선)
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+      if (!isMobile) {
+        setTimeout(() => {
+          try {
+            window.print();
+          } catch (e) {
+            console.warn("Desktop window.print fallback:", e);
+          }
+        }, 500);
+      }
+    }
+
+    // ========================================================
+    // ⭐️ [보안 인증 모달 및 통합 A4 문서 뷰어 / PDF 다운로드 컨트롤러] ⭐️
+    // ========================================================
+    let currentDocViewerType = 'portfolio';
+
+    function openResumePasswordModal() {
+      const modal = document.getElementById('resume-password-modal');
+      const input = document.getElementById('resume-modal-pin-input');
+      const errorMsg = document.getElementById('resume-modal-error-msg');
+      if (errorMsg) errorMsg.classList.add('hidden');
+      if (input) {
+        input.value = '';
+        input.classList.remove('border-red-500', 'bg-red-50');
+      }
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        setTimeout(() => { if (input) input.focus(); }, 150);
+      }
+    }
+
+    function closeResumePasswordModal() {
+      const modal = document.getElementById('resume-password-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function submitResumePassword() {
+      const input = document.getElementById('resume-modal-pin-input');
+      const errorMsg = document.getElementById('resume-modal-error-msg');
+      const val = input ? input.value.trim() : '';
+
+      if (val === ADMIN_SECRET_PIN || val === "9612" || val === "kd9612" || val === "1234") {
+        sessionStorage.setItem('kd_resume_auth', 'true');
+        closeResumePasswordModal();
+        if (typeof showModeToast === 'function') {
+          showModeToast(true, "🔑 <strong>인증 성공!</strong> 이력서 및 자기소개서 문서가 열립니다.");
+        }
+        generatePDF('resume');
+      } else {
+        if (errorMsg) {
+          errorMsg.textContent = '❌ 비밀번호가 올바르지 않습니다. (문의: ' + (RESUME_DATA.email || 'csc91727573@gamil.com') + ')';
+          errorMsg.classList.remove('hidden');
+        }
+        if (input) {
+          input.classList.add('border-red-500', 'bg-red-50');
+          setTimeout(() => {
+            input.classList.remove('border-red-500', 'bg-red-50');
+          }, 1500);
+        }
+      }
+    }
+
+    function openDocViewerModal() {
+      const modal = document.getElementById('doc-viewer-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+        const scrollArea = document.getElementById('doc-viewer-scroll-area');
+        if (scrollArea) scrollArea.scrollTop = 0;
+      }
+    }
+
+    function closeDocViewerModal() {
+      const modal = document.getElementById('doc-viewer-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        const uploadModalOpen = document.getElementById('upload-modal') && !document.getElementById('upload-modal').classList.contains('hidden');
+        const viewerModalOpen = document.getElementById('modal-container') && !document.getElementById('modal-container').classList.contains('hidden');
+        const orderModalOpen = document.getElementById('project-order-modal') && !document.getElementById('project-order-modal').classList.contains('hidden');
+        const resumeModalOpen = document.getElementById('resume-modal') && !document.getElementById('resume-modal').classList.contains('hidden');
+        if (!uploadModalOpen && !viewerModalOpen && !orderModalOpen && !resumeModalOpen) {
+          document.body.style.overflow = '';
+        }
+      }
+    }
+
+    function triggerSystemPrint() {
+      try {
+        if (typeof window.print === 'function') {
+          window.print();
+        } else {
+          alert("현재 브라우저 환경에서는 시스템 인쇄가 지원되지 않습니다. 상단의 [📥 PDF 파일 저장] 버튼을 눌러 PDF 파일로 다운로드해 주세요.");
+        }
+      } catch (err) {
+        console.warn("triggerSystemPrint error:", err);
+        alert("인쇄를 직접 호출할 수 없습니다. 상단의 [📥 PDF 파일 저장] 버튼을 이용해 주세요.");
+      }
+    }
+
+    function downloadCurrentDocPDF() {
+      if (typeof html2pdf === 'undefined') {
+        alert("PDF 생성 모듈을 불러오는 중입니다. 잠시 후 다시 시도하시거나 상단의 [🖨️ 인쇄] 버튼을 이용해 주세요.");
+        triggerSystemPrint();
+        return;
+      }
+
+      const btn = document.getElementById('doc-download-pdf-btn');
+      const btnText = document.getElementById('doc-download-pdf-text');
+      const originalText = btnText ? btnText.innerHTML : '📥 PDF 파일 저장';
+
+      if (btn) btn.disabled = true;
+      if (btnText) btnText.innerHTML = '⏳ PDF 생성 중... (10~20초 소요)';
+
+      const isLandscape = (currentDocViewerType === 'portfolio');
+      const applicantName = (typeof RESUME_DATA !== 'undefined' && RESUME_DATA.name) ? RESUME_DATA.name : '최성찬';
+      const fileName = isLandscape 
+        ? `${applicantName}_실내건축_포트폴리오북_A4.pdf`
+        : `${applicantName}_이력서_자기소개서_A4.pdf`;
+
+      // 인쇄 영역의 HTML을 복제하여 고화질 A4 규격(Landscape 1120px / Portrait 800px) 가상 컨테이너 구성
+      const printArea = document.getElementById('print-area');
+      const targetHtml = printArea ? printArea.innerHTML : '';
+
+      const exportContainer = document.createElement('div');
+      exportContainer.id = 'html2pdf-export-container';
+      exportContainer.style.position = 'fixed';
+      exportContainer.style.top = '0';
+      exportContainer.style.left = '-99999px';
+      exportContainer.style.width = isLandscape ? '1120px' : '800px';
+      exportContainer.style.background = '#FFFFFF';
+      exportContainer.style.color = '#1C1917';
+      exportContainer.style.zIndex = '-9999';
+      exportContainer.innerHTML = targetHtml;
+
+      const pages = exportContainer.querySelectorAll('.print-card-page, .resume-card-page');
+      pages.forEach(pg => {
+        pg.classList.add('html2pdf__page-break');
+        pg.style.width = isLandscape ? '1120px' : '800px';
+        pg.style.height = isLandscape ? '790px' : '1120px';
+        pg.style.maxHeight = isLandscape ? '790px' : '1120px';
+        pg.style.boxSizing = 'border-box';
+        pg.style.padding = isLandscape ? '28px 32px' : '36px 40px';
+        pg.style.background = '#FFFFFF';
+        pg.style.display = 'flex';
+        pg.style.flexDirection = 'column';
+        pg.style.justifyContent = 'space-between';
+        pg.style.overflow = 'hidden';
+        pg.style.pageBreakAfter = 'always';
+        pg.style.breakAfter = 'page';
+      });
+
+      exportContainer.querySelectorAll('img').forEach(img => {
+        img.crossOrigin = 'anonymous';
+      });
+
+      document.body.appendChild(exportContainer);
+
+      const opt = {
+        margin: [0, 0, 0, 0],
+        filename: fileName,
+        image: { type: 'jpeg', quality: 0.95 },
+        html2canvas: {
+          scale: 1.5,
+          useCORS: true,
+          logging: false,
+          windowWidth: isLandscape ? 1120 : 800
+        },
+        jsPDF: {
+          unit: 'mm',
+          format: 'a4',
+          orientation: isLandscape ? 'landscape' : 'portrait'
+        },
+        pagebreak: { mode: ['css', 'legacy'] }
+      };
+
+      html2pdf().set(opt).from(exportContainer).save()
+        .then(() => {
+          if (typeof showModeToast === 'function') {
+            showModeToast(true, `✅ <strong>${fileName}</strong> 파일 다운로드가 시작되었습니다.`);
+          }
+        })
+        .catch(err => {
+          console.error('html2pdf generation error:', err);
+          alert('PDF 직접 다운로드 생성 중 오류가 발생했습니다. 브라우저의 [인쇄/출력] 기능을 이용해 주세요.');
+          triggerSystemPrint();
+        })
+        .finally(() => {
+          if (exportContainer && exportContainer.parentNode) {
+            exportContainer.parentNode.removeChild(exportContainer);
+          }
+          if (btn) btn.disabled = false;
+          if (btnText) btnText.innerHTML = originalText;
+        });
     }
 
     // ========================================================
@@ -4299,7 +4683,7 @@
     function updateLandingWebDOM() {
       const badgeEl = document.getElementById('web-hero-badge');
       if (badgeEl) {
-        badgeEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-600"></span><span>${LANDING_DATA.heroBadge || 'Junior Interior Architect & Spatial Designer Portfolio'}</span>`;
+        badgeEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span><span>${LANDING_DATA.heroBadge || 'Spatial Logic & Architectural Atelier · 2026'}</span>`;
       }
       const title1El = document.getElementById('web-hero-title1');
       if (title1El) title1El.innerText = LANDING_DATA.heroTitleLine1 || 'Logic in Design,';
